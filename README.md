@@ -1,4 +1,4 @@
-# PersonalityMatch
+# Personality Match
 Finding compatibility between individuals based on their answers for a pre defined set of questions.
 
 Distance metric is a simple Eucledian Distance for now.
