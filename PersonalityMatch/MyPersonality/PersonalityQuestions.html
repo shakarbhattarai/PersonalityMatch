@@ -1,0 +1,583 @@
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+	<title>Personality Questions</title>
+	<script type="text/javascript">
+
+		/*!
+ * iOS doesn't respect the meta viewport tag inside a frame
+ * add a link to the debug view (for demo purposes only)
+ */
+if (/(iPhone|iPad|iPod)/gi.test(navigator.userAgent) && window.location.pathname.indexOf('/full') > -1) {
+  var p = document.createElement('p');
+  p.innerHTML = '<a target="_blank" href="https://s.codepen.io/dbushell/debug/wGaamR"><b>Click here to view this demo properly on iOS devices (remove the top frame)</b></a>';
+  document.body.insertBefore(p, document.body.querySelector('h1'));
+}
+
+	</script>
+	<style>
+		/*!
+// CSS only Responsive Tables
+// http://dbushell.com/2016/03/04/css-only-responsive-tables/
+// by David Bushell
+*/
+
+.rtable {
+  /*!
+  // IE needs inline-block to position scrolling shadows otherwise use:
+  // display: block;
+  // max-width: min-content;
+  */
+  display: inline-block;
+  vertical-align: top;
+  max-width: 100%;
+
+  overflow-x: auto;
+
+  // optional - looks better for small cell values
+  white-space: nowrap;
+
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.rtable,
+.rtable--flip tbody {
+  // optional - enable iOS momentum scrolling
+  -webkit-overflow-scrolling: touch;
+
+  // scrolling shadows
+  background: radial-gradient(left, ellipse, rgba(0,0,0, .2) 0%, rgba(0,0,0, 0) 75%) 0 center,
+              radial-gradient(right, ellipse, rgba(0,0,0, .2) 0%, rgba(0,0,0, 0) 75%) 100% center;
+  background-size: 10px 100%, 10px 100%;
+  background-attachment: scroll, scroll;
+  background-repeat: no-repeat;
+}
+
+// change these gradients from white to your background colour if it differs
+// gradient on the first cells to hide the left shadow
+.rtable td:first-child,
+.rtable--flip tbody tr:first-child {
+  background-image: linear-gradient(to right, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%);
+  background-repeat: no-repeat;
+  background-size: 20px 100%;
+}
+
+// gradient on the last cells to hide the right shadow
+.rtable td:last-child,
+.rtable--flip tbody tr:last-child {
+  background-image: linear-gradient(to left, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%);
+  background-repeat: no-repeat;
+  background-position: 100% 0;
+  background-size: 20px 100%;
+}
+
+.rtable th {
+  font-size: 11px;
+  text-align: left;
+  text-transform: uppercase;
+  background: #f2f0e6;
+}
+
+.rtable th,
+.rtable td {
+  padding: 6px 12px;
+  border: 1px solid #d9d7ce;
+}
+
+.rtable--flip {
+  display: flex;
+  overflow: hidden;
+  background: none;
+}
+
+.rtable--flip thead {
+  display: flex;
+  flex-shrink: 0;
+  min-width: min-content;
+}
+
+.rtable--flip tbody {
+  display: flex;
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.rtable--flip tr {
+  display: flex;
+  flex-direction: column;
+  min-width: min-content;
+  flex-shrink: 0;
+}
+
+.rtable--flip td,
+.rtable--flip th {
+  display: block;
+}
+
+.rtable--flip td {
+  background-image: none !important;
+  // border-collapse is no longer active
+  border-left: 0;
+}
+
+// border-collapse is no longer active
+.rtable--flip th:not(:last-child),
+.rtable--flip td:not(:last-child) {
+  border-bottom: 0;
+}
+
+/*!
+// CodePen house keeping
+*/
+
+body {
+  margin: 0;
+  padding: 25px;
+  color: #494b4d;
+
+  font-size: 22px;
+  line-height: 20px;
+}
+
+h1, h2, h3 {
+  margin: 0 0 10px 0;
+
+}
+
+h1 {
+  font-size: 25px;
+  line-height: 30px;
+  color: #1d97bf;
+}
+
+h2 {
+  font-size: 22px;
+  line-height: 25px;
+    color: #1d97cf;
+}
+
+h3 {
+  font-size: 19px;
+  line-height: 20px;
+}
+
+table {
+  margin-bottom: 30px;
+}
+
+a {
+  color: #ff6680;
+}
+
+code {
+  background: #fffbcc;
+  font-size: 12px;
+}
+
+
+	</style>
+</head>
+<body>
+<center>
+<h1>
+	Kindly Answer These Questions
+
+</h1><hr color="green">
+
+	<form action="" method="POST">
+		{% csrf_token %}
+
+		<div id="topContent">
+		Name: <input type="text" name="FullName">
+		<br><br>
+		<div id="myDiv" >
+			Age: &nbsp;&nbsp;
+			<script type="text/javascript" id="AgeVal">
+				var selectList = document.createElement("select");
+				selectList.id = "ageSelect";
+				myDiv.appendChild(selectList);
+				for (var i = 0; i < 100; i++) {
+					var option = document.createElement("option");
+					option.value = i;
+					option.text = i;
+					selectList.appendChild(option);
+			}
+		 </script>
+		<br><br>
+			<input type="button" id="btnHide" class="btn btn-default" value="NEXT">
+		</div>
+
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+<script>
+$(document).ready(function () {
+    $("#btnHide").click(function () {
+        $("#mainContent").toggle();
+        $("#topContent").toggle();
+         $("#ExtraContent").toggle();
+    });
+});
+</script>
+
+
+		<br>
+		<hr color="green">
+		</div>
+		<div id="ExtraContent">
+			<br><br><br>
+			<h3> Upon clicking the next button, you will be presented with a series of questions. <br><br>
+				Your answer to these questions will be recorded and related to your age. <br><br>
+				However, the data will remain strictly confidential and shall not be exposed via any pages or API's.
+				<br><br>Analysis will be performed in the data in order to match your personality with everyone else in the team.</h3>
+
+			<br>
+			<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANUAAADtCAMAAAAft8BxAAAACVBMVEX//wD///8AAAAcwoncAAAHC0lEQVR4nO3d0ZqrKgwFYMv7P/Q5M/tri5KQlbAC2E6u9q5I8otSx1p7POZEkSMp25HU728olHxbkgr1JNH4qgCITuOqhkREF0/VrfXQIkfGUrk5Bm2sGooqzOnalqoYIDZsVMUTibAlKjZJkk1XpZAYrgFVGqmBTVPlDZMIm6OaYTq5ZqgmmWpXumqiKcgKqGaSaleqajoqwPKqFpgCLKdqDcrN8qkWmdwsl2odysnyqFaifCyHatUxFWD5Vf5q3KUPs2BVdKC0lZSuuklgllelF+9XaS9bV6R4KmuktIXqavLr1v4AskAVgtJV+AJrJ6eqzGNKW66vJy6xD12M5VHZ2XCUuAyZjyAWpAKySaPZH+FmqblD1K3GVVC6tlEx1iunBlbry2rDKjCdXKR9MJ7DRJFUznSeKiMoiIWq8HSuKgMohGWq/OlCm95zKjZZdXHhdTrDZBmqSH3JpIOlyqwwFBarr9oU9aEqi9VVbYsaUe2Lslhfp9oZZbC+TbUZqimnxzJUyxCXEE7DQqqdhko+u+yw+qqFkipKEVkB1UaoPuu+qp9wDda9VJdLxF7VdijxkvftVWJB6i4oq2TUysm+U9GQSnjHmBgsldTBOpaSVmGJKqH0xajPVGl5vSph7YXTYlfVsiRV28Xave/QVcpgYapjB5W6YEild50e+gb1qXx9Z0cns8gSVP19OLN4Nb5TdWUpKr2HvNI70duemMrYLmmV9+JzVb1lw6qdzgLfCwui6q2fU3c/UlWrdsH+1qSoFrDGVd0etlQJrD/VzVXh/pPiK1Ut6ztUUAfsqq34SFX5XJXZ4DtVYyn48af6U3lS8AOrqaOya56vAmsaUs3/y3GaaiqLoxpOwg3zzOKjVbXrJiqgSc36KFURVcBgY2mYMaoqt1eVRvVaQkjDjCEVjJqsQrL9a1OxjivqvqqjURWHai7LqSqV6gm6sepQVO/FhES0cKjerOP0PgWWO5EFz8qvxmdVvZiRihMu1Yt11Kg/1RwV/l5Ttf9VlfOLaK4prJmqeYM1pmoWA8lmsODDqlaV/1VlYxU+VLXgqaqX4+nyWd4d8FNVx4hqznwBJiGrsln+w+qpKjHVlMHCh4qqymU5dkBJdXqJnHMgIofV4FjlDxaaoFWVVrUNC+3eHCvXYCXvg3DvGaosFtx5uZ0KbXj57+Vd2KfKZOE9J6lSWAxVaGo/Elk+1HVil1R+lmMFerfSZDGqSmI5OlVUzR/DARWZ5elS2gGHVSms9aqEfdCLOk/h7VXO0EkQe7RcvUEq79T+7ovG8nXWznWPWuW8zikUQmL5umoOn0f7SU9QRWR5O7qiGlW5tPIXM86KoOop4fS58LuoaG2F4nL3cRqNF+r8afcRmwSrgsZY/h7qqt+o650J8cF69Rx3BVYvp3goqqEv2w+yAuvKJuneGAIrPt9EE55R0n1M4ztReKOH0z3OUd1zxlAFXdG0Ckq6P3CQVe8WrubRTFfSVcX6eRf8GB3bjhpK/k7P+ElCaaPbIp5FQinfQWWc0gkwLUYyYCrmk9uKTRvqXkO5nhszlp8reva6UpUSOgp9ctGO8ZEqfa6An3O2YXRQ8DPptoveUOFPRdwtPlLVRbmeNrpTRFTbD1YfdZvn3V4iptqcZaDuqbJQt3g+exMfqSpx1cYsE3Wf36h4h4264e+JACj7F21WI65hH1SIajMWhLrbL0UVgmq7fRBEQb8rt9ryChR1q1/Lg1Hm7zVuxMJRoGoHlgNlqrZheVC2ahOWCwWotmD5UIhqPas4UZBqNcuNwlRrWX4UqHrfZHILFKpaxoqYcNUiVgyFq1h3LcxAOVTzXVGTTzWXVeIon4p0S1C2yaua5XpnmaOa4Ro1RVScGwkzTSEV577PRFNQ9cgaMI4prkoYsMIyjai4rkI0jamusJGbF4mkcdWjgdU2RFn4JoZKcmHDJ7QmVPMTDNWjC4NRnEp+g6R66LATI/VoegdP9RuW6vp10QTRT5BV/6LI32OQVRkFpKieYauSEqeqHpYqK2++qiiq466qYqnutwe204WgSmIlqcSpXZg8kibCnJldf79SVGQYX3UpVle154G0GtgqBSSqhNNbUhV5Z0xHE8rLCQcYV9UhPcuXl7g/I+0HVdU3WV8JJrKYqr7J/v4sj8VXqUXb32jfUYWNVLfRrirE1J9OGKWw/8LHTL05nlHL+HV2ewiq5f0ro7TpgjxWxjC92gk4fVP5qdGxev0T2fqeEN1eXPQT1FMVyjlFpx631Bf0mb1XV/1/rPr3BnOVgt9Jlx6uuhkqZUHTLlrszn8L94YBYfJG0nnPWWIABbBVtQ1pUzfLu+ynxqQ58DIm+ggND+qwCkzcLsGKhg1t5F6RXhV/qpHo73SEQ+kULJVVV1tf5syYoyJ1Go7/AIdzb460ViRzAAAAAElFTkSuQmCC">
+		</div>
+		<div id="mainContent"  style="display:none">
+	<table id="test" align="center" class="rtable">
+	<tbody>
+	<tr>
+	<th width="430px"></th><th width="65px" align="center" valign="top"><small>Strongly disagree</small></th><th width="60px" align="center" valign="top"><small>Disagree</small></th><th width="60px" align="center" valign="top"><small>Neither agree not disagree</small></th><th width="60px" align="center" valign="top"><small>Agree</small></th><th width="60px" align="center" valign="top"><small>Strongly<br>agree</small></th>
+	</tr>
+
+
+<tr id="A7" style=""><td align="right">I take time out for others.</td>
+<td align="center"><input type="radio" name="A7" value="1" checked="true"></td><td align="center"><input type="radio" name="A7" value="2"></td><td align="center"><input type="radio" name="A7" value="3"></td><td align="center"><input type="radio" name="A7" value="4"></td><td align="center"><input type="radio" name="A7" value="5"></td></tr>
+<tr id="B11" style=""><td align="right">I know that I am not a special person.</td>
+<td align="center"><input type="radio" name="B11" value="1" checked="true"></td><td align="center"><input type="radio" name="B11" value="2"></td><td align="center"><input type="radio" name="B11" value="3"></td><td align="center"><input type="radio" name="B11" value="4"></td><td align="center"><input type="radio" name="B11" value="5"></td></tr>
+<tr id="D5" style=""><td align="right">I take control of things.</td>
+<td align="center"><input type="radio" name="D5" value="1" checked="true"></td><td align="center"><input type="radio" name="D5" value="2"></td><td align="center"><input type="radio" name="D5" value="3"></td><td align="center"><input type="radio" name="D5" value="4"></td><td align="center"><input type="radio" name="D5" value="5"></td></tr>
+<tr id="P9" style=""><td align="right">I try to forgive and forget.</td>
+<td align="center"><input type="radio" name="P9" value="1" checked="true"></td><td align="center"><input type="radio" name="P9" value="2"></td><td align="center"><input type="radio" name="P9" value="3"></td><td align="center"><input type="radio" name="P9" value="4"></td><td align="center"><input type="radio" name="P9" value="5"></td></tr>
+<tr id="G10" style=""><td align="right">I keep in the background.</td>
+<td align="center"><input type="radio" name="G10" value="1" checked="true"></td><td align="center"><input type="radio" name="G10" value="2"></td><td align="center"><input type="radio" name="G10" value="3"></td><td align="center"><input type="radio" name="G10" value="4"></td><td align="center"><input type="radio" name="G10" value="5"></td></tr>
+<tr id="N10" style=""><td align="right">I can't do without the company of others.</td>
+<td align="center"><input type="radio" name="N10" value="1" checked="true"></td><td align="center"><input type="radio" name="N10" value="2"></td><td align="center"><input type="radio" name="N10" value="3"></td><td align="center"><input type="radio" name="N10" value="4"></td><td align="center"><input type="radio" name="N10" value="5"></td></tr>
+<tr id="I8" style=""><td align="right">I trust others.</td>
+<td align="center"><input type="radio" name="I8" value="1" checked="true"></td><td align="center"><input type="radio" name="I8" value="2"></td><td align="center"><input type="radio" name="I8" value="3"></td><td align="center"><input type="radio" name="I8" value="4"></td><td align="center"><input type="radio" name="I8" value="5"></td></tr>
+<tr id="C5" style=""><td align="right">I am not easily frustrated.</td>
+<td align="center"><input type="radio" name="C5" value="1" checked="true"></td><td align="center"><input type="radio" name="C5" value="2"></td><td align="center"><input type="radio" name="C5" value="3"></td><td align="center"><input type="radio" name="C5" value="4"></td><td align="center"><input type="radio" name="C5" value="5"></td></tr>
+<tr id="A5" style=""><td align="right">I cheer people up.</td>
+<td align="center"><input type="radio" name="A5" value="1" checked="true"></td><td align="center"><input type="radio" name="A5" value="2"></td><td align="center"><input type="radio" name="A5" value="3"></td><td align="center"><input type="radio" name="A5" value="4"></td><td align="center"><input type="radio" name="A5" value="5"></td></tr>
+<tr id="G7" style=""><td align="right">I often feel uncomfortable around others.</td>
+<td align="center"><input type="radio" name="G7" value="1" checked="true"></td><td align="center"><input type="radio" name="G7" value="2"></td><td align="center"><input type="radio" name="G7" value="3"></td><td align="center"><input type="radio" name="G7" value="4"></td><td align="center"><input type="radio" name="G7" value="5"></td></tr>
+<tr id="C1" style=""><td align="right">I seldom feel blue.</td>
+<td align="center"><input type="radio" name="C1" value="1" checked="true"></td><td align="center"><input type="radio" name="C1" value="2"></td><td align="center"><input type="radio" name="C1" value="3"></td><td align="center"><input type="radio" name="C1" value="4"></td><td align="center"><input type="radio" name="C1" value="5"></td></tr>
+<tr id="C8" style=""><td align="right">I dislike myself.</td>
+<td align="center"><input type="radio" name="C8" value="1" checked="true"></td><td align="center"><input type="radio" name="C8" value="2"></td><td align="center"><input type="radio" name="C8" value="3"></td><td align="center"><input type="radio" name="C8" value="4"></td><td align="center"><input type="radio" name="C8" value="5"></td></tr>
+<tr id="D1" style=""><td align="right">I take charge.</td>
+<td align="center"><input type="radio" name="D1" value="1" checked="true"></td><td align="center"><input type="radio" name="D1" value="2"></td><td align="center"><input type="radio" name="D1" value="3"></td><td align="center"><input type="radio" name="D1" value="4"></td><td align="center"><input type="radio" name="D1" value="5"></td></tr>
+<tr id="D9" style=""><td align="right">I let others make the decisions.</td>
+<td align="center"><input type="radio" name="D9" value="1" checked="true"></td><td align="center"><input type="radio" name="D9" value="2"></td><td align="center"><input type="radio" name="D9" value="3"></td><td align="center"><input type="radio" name="D9" value="4"></td><td align="center"><input type="radio" name="D9" value="5"></td></tr>
+<tr id="M1" style=""><td align="right">I believe in the importance of art.</td>
+<td align="center"><input type="radio" name="M1" value="1" checked="true"></td><td align="center"><input type="radio" name="M1" value="2"></td><td align="center"><input type="radio" name="M1" value="3"></td><td align="center"><input type="radio" name="M1" value="4"></td><td align="center"><input type="radio" name="M1" value="5"></td></tr>
+<tr id="J2" style=""><td align="right">I like to get lost in thought.</td>
+<td align="center"><input type="radio" name="J2" value="1" checked="true"></td><td align="center"><input type="radio" name="J2" value="2"></td><td align="center"><input type="radio" name="J2" value="3"></td><td align="center"><input type="radio" name="J2" value="4"></td><td align="center"><input type="radio" name="J2" value="5"></td></tr>
+<tr id="D7" style=""><td align="right">I wait for others to lead the way.</td>
+<td align="center"><input type="radio" name="D7" value="1" checked="true"></td><td align="center"><input type="radio" name="D7" value="2"></td><td align="center"><input type="radio" name="D7" value="3"></td><td align="center"><input type="radio" name="D7" value="4"></td><td align="center"><input type="radio" name="D7" value="5"></td></tr>
+<tr id="K10" style=""><td align="right">I am willing to talk about myself.</td>
+<td align="center"><input type="radio" name="K10" value="1" checked="true"></td><td align="center"><input type="radio" name="K10" value="2"></td><td align="center"><input type="radio" name="K10" value="3"></td><td align="center"><input type="radio" name="K10" value="4"></td><td align="center"><input type="radio" name="K10" value="5"></td></tr>
+<tr id="G6" style=""><td align="right">I find it difficult to approach others.</td>
+<td align="center"><input type="radio" name="G6" value="1" checked="true"></td><td align="center"><input type="radio" name="G6" value="2"></td><td align="center"><input type="radio" name="G6" value="3"></td><td align="center"><input type="radio" name="G6" value="4"></td><td align="center"><input type="radio" name="G6" value="5"></td></tr>
+<tr id="N7" style=""><td align="right">I enjoy my privacy.</td>
+<td align="center"><input type="radio" name="N7" value="1" checked="true"></td><td align="center"><input type="radio" name="N7" value="2"></td><td align="center"><input type="radio" name="N7" value="3"></td><td align="center"><input type="radio" name="N7" value="4"></td><td align="center"><input type="radio" name="N7" value="5"></td></tr>
+<tr id="J5" style=""><td align="right">I swim against the current.</td>
+<td align="center"><input type="radio" name="J5" value="1" checked="true"></td><td align="center"><input type="radio" name="J5" value="2"></td><td align="center"><input type="radio" name="J5" value="3"></td><td align="center"><input type="radio" name="J5" value="4"></td><td align="center"><input type="radio" name="J5" value="5"></td></tr>
+<tr id="L6" style=""><td align="right">I feel guilty when I say "no."</td>
+<td align="center"><input type="radio" name="L6" value="1" checked="true"></td><td align="center"><input type="radio" name="L6" value="2"></td><td align="center"><input type="radio" name="L6" value="3"></td><td align="center"><input type="radio" name="L6" value="4"></td><td align="center"><input type="radio" name="L6" value="5"></td></tr>
+<tr id="K2" style=""><td align="right">I am hard to get to know.</td>
+<td align="center"><input type="radio" name="K2" value="1" checked="true"></td><td align="center"><input type="radio" name="K2" value="2"></td><td align="center"><input type="radio" name="K2" value="3"></td><td align="center"><input type="radio" name="K2" value="4"></td><td align="center"><input type="radio" name="K2" value="5"></td></tr>
+<tr id="K3" style=""><td align="right">I don't talk a lot.</td>
+<td align="center"><input type="radio" name="K3" value="1" checked="true"></td><td align="center"><input type="radio" name="K3" value="2"></td><td align="center"><input type="radio" name="K3" value="3"></td><td align="center"><input type="radio" name="K3" value="4"></td><td align="center"><input type="radio" name="K3" value="5"></td></tr>
+<tr id="F3" style=""><td align="right">I believe in one true religion.</td>
+<td align="center"><input type="radio" name="F3" value="1" checked="true"></td><td align="center"><input type="radio" name="F3" value="2"></td><td align="center"><input type="radio" name="F3" value="3"></td><td align="center"><input type="radio" name="F3" value="4"></td><td align="center"><input type="radio" name="F3" value="5"></td></tr>
+<tr id="P8" style=""><td align="right">I am not easily annoyed.</td>
+<td align="center"><input type="radio" name="P8" value="1" checked="true"></td><td align="center"><input type="radio" name="P8" value="2"></td><td align="center"><input type="radio" name="P8" value="3"></td><td align="center"><input type="radio" name="P8" value="4"></td><td align="center"><input type="radio" name="P8" value="5"></td></tr>
+<tr id="L7" style=""><td align="right">I feel crushed by setbacks.</td>
+<td align="center"><input type="radio" name="L7" value="1" checked="true"></td><td align="center"><input type="radio" name="L7" value="2"></td><td align="center"><input type="radio" name="L7" value="3"></td><td align="center"><input type="radio" name="L7" value="4"></td><td align="center"><input type="radio" name="L7" value="5"></td></tr>
+<tr id="L1" style=""><td align="right">I am afraid that I will do the wrong thing.</td>
+<td align="center"><input type="radio" name="L1" value="1" checked="true"></td><td align="center"><input type="radio" name="L1" value="2"></td><td align="center"><input type="radio" name="L1" value="3"></td><td align="center"><input type="radio" name="L1" value="4"></td><td align="center"><input type="radio" name="L1" value="5"></td></tr>
+<tr id="E4" style=""><td align="right">I enjoy being part of a loud crowd.</td>
+<td align="center"><input type="radio" name="E4" value="1" checked="true"></td><td align="center"><input type="radio" name="E4" value="2"></td><td align="center"><input type="radio" name="E4" value="3"></td><td align="center"><input type="radio" name="E4" value="4"></td><td align="center"><input type="radio" name="E4" value="5"></td></tr>
+<tr id="B8" style=""><td align="right">I weigh the pros against the cons.</td>
+<td align="center"><input type="radio" name="B8" value="1" checked="true"></td><td align="center"><input type="radio" name="B8" value="2"></td><td align="center"><input type="radio" name="B8" value="3"></td><td align="center"><input type="radio" name="B8" value="4"></td><td align="center"><input type="radio" name="B8" value="5"></td></tr>
+<tr id="J7" style=""><td align="right">I do unexpected things.</td>
+<td align="center"><input type="radio" name="J7" value="1" checked="true"></td><td align="center"><input type="radio" name="J7" value="2"></td><td align="center"><input type="radio" name="J7" value="3"></td><td align="center"><input type="radio" name="J7" value="4"></td><td align="center"><input type="radio" name="J7" value="5"></td></tr>
+<tr id="P2" style=""><td align="right">I get angry easily.</td>
+<td align="center"><input type="radio" name="P2" value="1" checked="true"></td><td align="center"><input type="radio" name="P2" value="2"></td><td align="center"><input type="radio" name="P2" value="3"></td><td align="center"><input type="radio" name="P2" value="4"></td><td align="center"><input type="radio" name="P2" value="5"></td></tr>
+<tr id="G9" style=""><td align="right">I am quiet around strangers.</td>
+<td align="center"><input type="radio" name="G9" value="1" checked="true"></td><td align="center"><input type="radio" name="G9" value="2"></td><td align="center"><input type="radio" name="G9" value="3"></td><td align="center"><input type="radio" name="G9" value="4"></td><td align="center"><input type="radio" name="G9" value="5"></td></tr>
+<tr id="N5" style=""><td align="right">I don't mind eating alone.</td>
+<td align="center"><input type="radio" name="N5" value="1" checked="true"></td><td align="center"><input type="radio" name="N5" value="2"></td><td align="center"><input type="radio" name="N5" value="3"></td><td align="center"><input type="radio" name="N5" value="4"></td><td align="center"><input type="radio" name="N5" value="5"></td></tr>
+<tr id="A6" style=""><td align="right">I make people feel at ease.</td>
+<td align="center"><input type="radio" name="A6" value="1" checked="true"></td><td align="center"><input type="radio" name="A6" value="2"></td><td align="center"><input type="radio" name="A6" value="3"></td><td align="center"><input type="radio" name="A6" value="4"></td><td align="center"><input type="radio" name="A6" value="5"></td></tr>
+<tr id="B4" style=""><td align="right">I use my brain.</td>
+<td align="center"><input type="radio" name="B4" value="1" checked="true"></td><td align="center"><input type="radio" name="B4" value="2"></td><td align="center"><input type="radio" name="B4" value="3"></td><td align="center"><input type="radio" name="B4" value="4"></td><td align="center"><input type="radio" name="B4" value="5"></td></tr>
+<tr id="P10" style=""><td align="right">I have a good word for everyone.</td>
+<td align="center"><input type="radio" name="P10" value="1" checked="true"></td><td align="center"><input type="radio" name="P10" value="2"></td><td align="center"><input type="radio" name="P10" value="3"></td><td align="center"><input type="radio" name="P10" value="4"></td><td align="center"><input type="radio" name="P10" value="5"></td></tr>
+<tr id="C9" style=""><td align="right">I feel desperate.</td>
+<td align="center"><input type="radio" name="C9" value="1" checked="true"></td><td align="center"><input type="radio" name="C9" value="2"></td><td align="center"><input type="radio" name="C9" value="3"></td><td align="center"><input type="radio" name="C9" value="4"></td><td align="center"><input type="radio" name="C9" value="5"></td></tr>
+<tr id="D2" style=""><td align="right">I want to be in charge.</td>
+<td align="center"><input type="radio" name="D2" value="1" checked="true"></td><td align="center"><input type="radio" name="D2" value="2"></td><td align="center"><input type="radio" name="D2" value="3"></td><td align="center"><input type="radio" name="D2" value="4"></td><td align="center"><input type="radio" name="D2" value="5"></td></tr>
+<tr id="G1" style=""><td align="right">I feel comfortable around people.</td>
+<td align="center"><input type="radio" name="G1" value="1" checked="true"></td><td align="center"><input type="radio" name="G1" value="2"></td><td align="center"><input type="radio" name="G1" value="3"></td><td align="center"><input type="radio" name="G1" value="4"></td><td align="center"><input type="radio" name="G1" value="5"></td></tr>
+<tr id="E1" style=""><td align="right">I am the life of the party.</td>
+<td align="center"><input type="radio" name="E1" value="1" checked="true"></td><td align="center"><input type="radio" name="E1" value="2"></td><td align="center"><input type="radio" name="E1" value="3"></td><td align="center"><input type="radio" name="E1" value="4"></td><td align="center"><input type="radio" name="E1" value="5"></td></tr>
+<tr id="L10" style=""><td align="right">I don't let others discourage me.</td>
+<td align="center"><input type="radio" name="L10" value="1" checked="true"></td><td align="center"><input type="radio" name="L10" value="2"></td><td align="center"><input type="radio" name="L10" value="3"></td><td align="center"><input type="radio" name="L10" value="4"></td><td align="center"><input type="radio" name="L10" value="5"></td></tr>
+<tr id="N8" style=""><td align="right">I enjoy being part of a group.</td>
+<td align="center"><input type="radio" name="N8" value="1" checked="true"></td><td align="center"><input type="radio" name="N8" value="2"></td><td align="center"><input type="radio" name="N8" value="3"></td><td align="center"><input type="radio" name="N8" value="4"></td><td align="center"><input type="radio" name="N8" value="5"></td></tr>
+<tr id="J4" style=""><td align="right">I love to daydream.</td>
+<td align="center"><input type="radio" name="J4" value="1" checked="true"></td><td align="center"><input type="radio" name="J4" value="2"></td><td align="center"><input type="radio" name="J4" value="3"></td><td align="center"><input type="radio" name="J4" value="4"></td><td align="center"><input type="radio" name="J4" value="5"></td></tr>
+<tr id="I4" style=""><td align="right">I distrust people.</td>
+<td align="center"><input type="radio" name="I4" value="1" checked="true"></td><td align="center"><input type="radio" name="I4" value="2"></td><td align="center"><input type="radio" name="I4" value="3"></td><td align="center"><input type="radio" name="I4" value="4"></td><td align="center"><input type="radio" name="I4" value="5"></td></tr>
+<tr id="L4" style=""><td align="right">I worry about things.</td>
+<td align="center"><input type="radio" name="L4" value="1" checked="true"></td><td align="center"><input type="radio" name="L4" value="2"></td><td align="center"><input type="radio" name="L4" value="3"></td><td align="center"><input type="radio" name="L4" value="4"></td><td align="center"><input type="radio" name="L4" value="5"></td></tr>
+<tr id="L9" style=""><td align="right">I am not easily bothered by things.</td>
+<td align="center"><input type="radio" name="L9" value="1" checked="true"></td><td align="center"><input type="radio" name="L9" value="2"></td><td align="center"><input type="radio" name="L9" value="3"></td><td align="center"><input type="radio" name="L9" value="4"></td><td align="center"><input type="radio" name="L9" value="5"></td></tr>
+<tr id="F4" style=""><td align="right">I respect authority.</td>
+<td align="center"><input type="radio" name="F4" value="1" checked="true"></td><td align="center"><input type="radio" name="F4" value="2"></td><td align="center"><input type="radio" name="F4" value="3"></td><td align="center"><input type="radio" name="F4" value="4"></td><td align="center"><input type="radio" name="F4" value="5"></td></tr>
+<tr id="J1" style=""><td align="right">I do things that others find strange.</td>
+<td align="center"><input type="radio" name="J1" value="1" checked="true"></td><td align="center"><input type="radio" name="J1" value="2"></td><td align="center"><input type="radio" name="J1" value="3"></td><td align="center"><input type="radio" name="J1" value="4"></td><td align="center"><input type="radio" name="J1" value="5"></td></tr>
+<tr id="B13" style=""><td align="right">I skip difficult words while reading.</td>
+<td align="center"><input type="radio" name="B13" value="1" checked="true"></td><td align="center"><input type="radio" name="B13" value="2"></td><td align="center"><input type="radio" name="B13" value="3"></td><td align="center"><input type="radio" name="B13" value="4"></td><td align="center"><input type="radio" name="B13" value="5"></td></tr>
+<tr id="C2" style=""><td align="right">I feel comfortable with myself.</td>
+<td align="center"><input type="radio" name="C2" value="1" checked="true"></td><td align="center"><input type="radio" name="C2" value="2"></td><td align="center"><input type="radio" name="C2" value="3"></td><td align="center"><input type="radio" name="C2" value="4"></td><td align="center"><input type="radio" name="C2" value="5"></td></tr>
+<tr id="O5" style=""><td align="right">I am exacting in my work.</td>
+<td align="center"><input type="radio" name="O5" value="1" checked="true"></td><td align="center"><input type="radio" name="O5" value="2"></td><td align="center"><input type="radio" name="O5" value="3"></td><td align="center"><input type="radio" name="O5" value="4"></td><td align="center"><input type="radio" name="O5" value="5"></td></tr>
+<tr id="B3" style=""><td align="right">I tend to analyze things.</td>
+<td align="center"><input type="radio" name="B3" value="1" checked="true"></td><td align="center"><input type="radio" name="B3" value="2"></td><td align="center"><input type="radio" name="B3" value="3"></td><td align="center"><input type="radio" name="B3" value="4"></td><td align="center"><input type="radio" name="B3" value="5"></td></tr>
+<tr id="O4" style=""><td align="right">I continue until everything is perfect.</td>
+<td align="center"><input type="radio" name="O4" value="1" checked="true"></td><td align="center"><input type="radio" name="O4" value="2"></td><td align="center"><input type="radio" name="O4" value="3"></td><td align="center"><input type="radio" name="O4" value="4"></td><td align="center"><input type="radio" name="O4" value="5"></td></tr>
+<tr id="I10" style=""><td align="right">I believe that people are basically moral.</td>
+<td align="center"><input type="radio" name="I10" value="1" checked="true"></td><td align="center"><input type="radio" name="I10" value="2"></td><td align="center"><input type="radio" name="I10" value="3"></td><td align="center"><input type="radio" name="I10" value="4"></td><td align="center"><input type="radio" name="I10" value="5"></td></tr>
+<tr id="P3" style=""><td align="right">I am quick to judge others.</td>
+<td align="center"><input type="radio" name="P3" value="1" checked="true"></td><td align="center"><input type="radio" name="P3" value="2"></td><td align="center"><input type="radio" name="P3" value="3"></td><td align="center"><input type="radio" name="P3" value="4"></td><td align="center"><input type="radio" name="P3" value="5"></td></tr>
+<tr id="C4" style=""><td align="right">I am relaxed most of the time.</td>
+<td align="center"><input type="radio" name="C4" value="1" checked="true"></td><td align="center"><input type="radio" name="C4" value="2"></td><td align="center"><input type="radio" name="C4" value="3"></td><td align="center"><input type="radio" name="C4" value="4"></td><td align="center"><input type="radio" name="C4" value="5"></td></tr>
+<tr id="N6" style=""><td align="right">I enjoy silence.</td>
+<td align="center"><input type="radio" name="N6" value="1" checked="true"></td><td align="center"><input type="radio" name="N6" value="2"></td><td align="center"><input type="radio" name="N6" value="3"></td><td align="center"><input type="radio" name="N6" value="4"></td><td align="center"><input type="radio" name="N6" value="5"></td></tr>
+<tr id="K9" style=""><td align="right">I show my feelings.</td>
+<td align="center"><input type="radio" name="K9" value="1" checked="true"></td><td align="center"><input type="radio" name="K9" value="2"></td><td align="center"><input type="radio" name="K9" value="3"></td><td align="center"><input type="radio" name="K9" value="4"></td><td align="center"><input type="radio" name="K9" value="5"></td></tr>
+<tr id="P7" style=""><td align="right">I judge people by their appearance.</td>
+<td align="center"><input type="radio" name="P7" value="1" checked="true"></td><td align="center"><input type="radio" name="P7" value="2"></td><td align="center"><input type="radio" name="P7" value="3"></td><td align="center"><input type="radio" name="P7" value="4"></td><td align="center"><input type="radio" name="P7" value="5"></td></tr>
+<tr id="M5" style=""><td align="right">I prefer variety to routine.</td>
+<td align="center"><input type="radio" name="M5" value="1" checked="true"></td><td align="center"><input type="radio" name="M5" value="2"></td><td align="center"><input type="radio" name="M5" value="3"></td><td align="center"><input type="radio" name="M5" value="4"></td><td align="center"><input type="radio" name="M5" value="5"></td></tr>
+<tr id="D8" style=""><td align="right">I never challenge things.</td>
+<td align="center"><input type="radio" name="D8" value="1" checked="true"></td><td align="center"><input type="radio" name="D8" value="2"></td><td align="center"><input type="radio" name="D8" value="3"></td><td align="center"><input type="radio" name="D8" value="4"></td><td align="center"><input type="radio" name="D8" value="5"></td></tr>
+<tr id="P6" style=""><td align="right">I can't stand being contradicted.</td>
+<td align="center"><input type="radio" name="P6" value="1" checked="true"></td><td align="center"><input type="radio" name="P6" value="2"></td><td align="center"><input type="radio" name="P6" value="3"></td><td align="center"><input type="radio" name="P6" value="4"></td><td align="center"><input type="radio" name="P6" value="5"></td></tr>
+<tr id="A10" style=""><td align="right">I try not to think about the needy.</td>
+<td align="center"><input type="radio" name="A10" value="1" checked="true"></td><td align="center"><input type="radio" name="A10" value="2"></td><td align="center"><input type="radio" name="A10" value="3"></td><td align="center"><input type="radio" name="A10" value="4"></td><td align="center"><input type="radio" name="A10" value="5"></td></tr>
+<tr id="P5" style=""><td align="right">I am easily put out.</td>
+<td align="center"><input type="radio" name="P5" value="1" checked="true"></td><td align="center"><input type="radio" name="P5" value="2"></td><td align="center"><input type="radio" name="P5" value="3"></td><td align="center"><input type="radio" name="P5" value="4"></td><td align="center"><input type="radio" name="P5" value="5"></td></tr>
+<tr id="N2" style=""><td align="right">I prefer to do things by myself.</td>
+<td align="center"><input type="radio" name="N2" value="1" checked="true"></td><td align="center"><input type="radio" name="N2" value="2"></td><td align="center"><input type="radio" name="N2" value="3"></td><td align="center"><input type="radio" name="N2" value="4"></td><td align="center"><input type="radio" name="N2" value="5"></td></tr>
+<tr id="P1" style=""><td align="right">I get irritated easily.</td>
+<td align="center"><input type="radio" name="P1" value="1" checked="true"></td><td align="center"><input type="radio" name="P1" value="2"></td><td align="center"><input type="radio" name="P1" value="3"></td><td align="center"><input type="radio" name="P1" value="4"></td><td align="center"><input type="radio" name="P1" value="5"></td></tr>
+<tr id="B2" style=""><td align="right">I know the answers to many questions.</td>
+<td align="center"><input type="radio" name="B2" value="1" checked="true"></td><td align="center"><input type="radio" name="B2" value="2"></td><td align="center"><input type="radio" name="B2" value="3"></td><td align="center"><input type="radio" name="B2" value="4"></td><td align="center"><input type="radio" name="B2" value="5"></td></tr>
+<tr id="I7" style=""><td align="right">I trust what people say.</td>
+<td align="center"><input type="radio" name="I7" value="1" checked="true"></td><td align="center"><input type="radio" name="I7" value="2"></td><td align="center"><input type="radio" name="I7" value="3"></td><td align="center"><input type="radio" name="I7" value="4"></td><td align="center"><input type="radio" name="I7" value="5"></td></tr>
+<tr id="F5" style=""><td align="right">I like to stand during the national anthem.</td>
+<td align="center"><input type="radio" name="F5" value="1" checked="true"></td><td align="center"><input type="radio" name="F5" value="2"></td><td align="center"><input type="radio" name="F5" value="3"></td><td align="center"><input type="radio" name="F5" value="4"></td><td align="center"><input type="radio" name="F5" value="5"></td></tr>
+<tr id="H6" style=""><td align="right">I love flowers.</td>
+<td align="center"><input type="radio" name="H6" value="1" checked="true"></td><td align="center"><input type="radio" name="H6" value="2"></td><td align="center"><input type="radio" name="H6" value="3"></td><td align="center"><input type="radio" name="H6" value="4"></td><td align="center"><input type="radio" name="H6" value="5"></td></tr>
+<tr id="I1" style=""><td align="right">I find it hard to forgive others.</td>
+<td align="center"><input type="radio" name="I1" value="1" checked="true"></td><td align="center"><input type="radio" name="I1" value="2"></td><td align="center"><input type="radio" name="I1" value="3"></td><td align="center"><input type="radio" name="I1" value="4"></td><td align="center"><input type="radio" name="I1" value="5"></td></tr>
+<tr id="O9" style=""><td align="right">I leave my belongings around.</td>
+<td align="center"><input type="radio" name="O9" value="1" checked="true"></td><td align="center"><input type="radio" name="O9" value="2"></td><td align="center"><input type="radio" name="O9" value="3"></td><td align="center"><input type="radio" name="O9" value="4"></td><td align="center"><input type="radio" name="O9" value="5"></td></tr>
+<tr id="A3" style=""><td align="right">I feel others' emotions.</td>
+<td align="center"><input type="radio" name="A3" value="1" checked="true"></td><td align="center"><input type="radio" name="A3" value="2"></td><td align="center"><input type="radio" name="A3" value="3"></td><td align="center"><input type="radio" name="A3" value="4"></td><td align="center"><input type="radio" name="A3" value="5"></td></tr>
+<tr id="D10" style=""><td align="right">I let myself be pushed around.</td>
+<td align="center"><input type="radio" name="D10" value="1" checked="true"></td><td align="center"><input type="radio" name="D10" value="2"></td><td align="center"><input type="radio" name="D10" value="3"></td><td align="center"><input type="radio" name="D10" value="4"></td><td align="center"><input type="radio" name="D10" value="5"></td></tr>
+<tr id="E8" style=""><td align="right">I don't like crowded events.</td>
+<td align="center"><input type="radio" name="E8" value="1" checked="true"></td><td align="center"><input type="radio" name="E8" value="2"></td><td align="center"><input type="radio" name="E8" value="3"></td><td align="center"><input type="radio" name="E8" value="4"></td><td align="center"><input type="radio" name="E8" value="5"></td></tr>
+<tr id="M3" style=""><td align="right">I enjoy hearing new ideas.</td>
+<td align="center"><input type="radio" name="M3" value="1" checked="true"></td><td align="center"><input type="radio" name="M3" value="2"></td><td align="center"><input type="radio" name="M3" value="3"></td><td align="center"><input type="radio" name="M3" value="4"></td><td align="center"><input type="radio" name="M3" value="5"></td></tr>
+<tr id="E6" style=""><td align="right">I act wild and crazy.</td>
+<td align="center"><input type="radio" name="E6" value="1" checked="true"></td><td align="center"><input type="radio" name="E6" value="2"></td><td align="center"><input type="radio" name="E6" value="3"></td><td align="center"><input type="radio" name="E6" value="4"></td><td align="center"><input type="radio" name="E6" value="5"></td></tr>
+<tr id="H3" style=""><td align="right">I read a lot.</td>
+<td align="center"><input type="radio" name="H3" value="1" checked="true"></td><td align="center"><input type="radio" name="H3" value="2"></td><td align="center"><input type="radio" name="H3" value="3"></td><td align="center"><input type="radio" name="H3" value="4"></td><td align="center"><input type="radio" name="H3" value="5"></td></tr>
+<tr id="F2" style=""><td align="right">I try to follow the rules.</td>
+<td align="center"><input type="radio" name="F2" value="1" checked="true"></td><td align="center"><input type="radio" name="F2" value="2"></td><td align="center"><input type="radio" name="F2" value="3"></td><td align="center"><input type="radio" name="F2" value="4"></td><td align="center"><input type="radio" name="F2" value="5"></td></tr>
+<tr id="J3" style=""><td align="right">I enjoy wild flights of fantasy.</td>
+<td align="center"><input type="radio" name="J3" value="1" checked="true"></td><td align="center"><input type="radio" name="J3" value="2"></td><td align="center"><input type="radio" name="J3" value="3"></td><td align="center"><input type="radio" name="J3" value="4"></td><td align="center"><input type="radio" name="J3" value="5"></td></tr>
+<tr id="F8" style=""><td align="right">I use swear words.</td>
+<td align="center"><input type="radio" name="F8" value="1" checked="true"></td><td align="center"><input type="radio" name="F8" value="2"></td><td align="center"><input type="radio" name="F8" value="3"></td><td align="center"><input type="radio" name="F8" value="4"></td><td align="center"><input type="radio" name="F8" value="5"></td></tr>
+<tr id="L8" style=""><td align="right">I don't worry about things that have already happened.</td>
+<td align="center"><input type="radio" name="L8" value="1" checked="true"></td><td align="center"><input type="radio" name="L8" value="2"></td><td align="center"><input type="radio" name="L8" value="3"></td><td align="center"><input type="radio" name="L8" value="4"></td><td align="center"><input type="radio" name="L8" value="5"></td></tr>
+<tr id="D3" style=""><td align="right">I say what I think.</td>
+<td align="center"><input type="radio" name="D3" value="1" checked="true"></td><td align="center"><input type="radio" name="D3" value="2"></td><td align="center"><input type="radio" name="D3" value="3"></td><td align="center"><input type="radio" name="D3" value="4"></td><td align="center"><input type="radio" name="D3" value="5"></td></tr>
+<tr id="L3" style=""><td align="right">I am easily hurt.</td>
+<td align="center"><input type="radio" name="L3" value="1" checked="true"></td><td align="center"><input type="radio" name="L3" value="2"></td><td align="center"><input type="radio" name="L3" value="3"></td><td align="center"><input type="radio" name="L3" value="4"></td><td align="center"><input type="radio" name="L3" value="5"></td></tr>
+<tr id="N3" style=""><td align="right">I enjoy spending time by myself.</td>
+<td align="center"><input type="radio" name="N3" value="1" checked="true"></td><td align="center"><input type="radio" name="N3" value="2"></td><td align="center"><input type="radio" name="N3" value="3"></td><td align="center"><input type="radio" name="N3" value="4"></td><td align="center"><input type="radio" name="N3" value="5"></td></tr>
+<tr id="G3" style=""><td align="right">I don't mind being the center of attention.</td>
+<td align="center"><input type="radio" name="G3" value="1" checked="true"></td><td align="center"><input type="radio" name="G3" value="2"></td><td align="center"><input type="radio" name="G3" value="3"></td><td align="center"><input type="radio" name="G3" value="4"></td><td align="center"><input type="radio" name="G3" value="5"></td></tr>
+<tr id="J10" style=""><td align="right">I seldom get lost in thought.</td>
+<td align="center"><input type="radio" name="J10" value="1" checked="true"></td><td align="center"><input type="radio" name="J10" value="2"></td><td align="center"><input type="radio" name="J10" value="3"></td><td align="center"><input type="radio" name="J10" value="4"></td><td align="center"><input type="radio" name="J10" value="5"></td></tr>
+<tr id="J9" style=""><td align="right">I seldom daydream.</td>
+<td align="center"><input type="radio" name="J9" value="1" checked="true"></td><td align="center"><input type="radio" name="J9" value="2"></td><td align="center"><input type="radio" name="J9" value="3"></td><td align="center"><input type="radio" name="J9" value="4"></td><td align="center"><input type="radio" name="J9" value="5"></td></tr>
+<tr id="I2" style=""><td align="right">I suspect hidden motives in others.</td>
+<td align="center"><input type="radio" name="I2" value="1" checked="true"></td><td align="center"><input type="radio" name="I2" value="2"></td><td align="center"><input type="radio" name="I2" value="3"></td><td align="center"><input type="radio" name="I2" value="4"></td><td align="center"><input type="radio" name="I2" value="5"></td></tr>
+<tr id="M9" style=""><td align="right">I am not interested in abstract ideas.</td>
+<td align="center"><input type="radio" name="M9" value="1" checked="true"></td><td align="center"><input type="radio" name="M9" value="2"></td><td align="center"><input type="radio" name="M9" value="3"></td><td align="center"><input type="radio" name="M9" value="4"></td><td align="center"><input type="radio" name="M9" value="5"></td></tr>
+<tr id="C10" style=""><td align="right">I am easily discouraged.</td>
+<td align="center"><input type="radio" name="C10" value="1" checked="true"></td><td align="center"><input type="radio" name="C10" value="2"></td><td align="center"><input type="radio" name="C10" value="3"></td><td align="center"><input type="radio" name="C10" value="4"></td><td align="center"><input type="radio" name="C10" value="5"></td></tr>
+<tr id="D4" style=""><td align="right">I am not afraid of providing criticism.</td>
+<td align="center"><input type="radio" name="D4" value="1" checked="true"></td><td align="center"><input type="radio" name="D4" value="2"></td><td align="center"><input type="radio" name="D4" value="3"></td><td align="center"><input type="radio" name="D4" value="4"></td><td align="center"><input type="radio" name="D4" value="5"></td></tr>
+<tr id="K8" style=""><td align="right">I disclose my intimate thoughts.</td>
+<td align="center"><input type="radio" name="K8" value="1" checked="true"></td><td align="center"><input type="radio" name="K8" value="2"></td><td align="center"><input type="radio" name="K8" value="3"></td><td align="center"><input type="radio" name="K8" value="4"></td><td align="center"><input type="radio" name="K8" value="5"></td></tr>
+<tr id="H4" style=""><td align="right">I don't like action movies.</td>
+<td align="center"><input type="radio" name="H4" value="1" checked="true"></td><td align="center"><input type="radio" name="H4" value="2"></td><td align="center"><input type="radio" name="H4" value="3"></td><td align="center"><input type="radio" name="H4" value="4"></td><td align="center"><input type="radio" name="H4" value="5"></td></tr>
+<tr id="O1" style=""><td align="right">I want everything to be "just right."</td>
+<td align="center"><input type="radio" name="O1" value="1" checked="true"></td><td align="center"><input type="radio" name="O1" value="2"></td><td align="center"><input type="radio" name="O1" value="3"></td><td align="center"><input type="radio" name="O1" value="4"></td><td align="center"><input type="radio" name="O1" value="5"></td></tr>
+<tr id="L2" style=""><td align="right">I feel threatened easily.</td>
+<td align="center"><input type="radio" name="L2" value="1" checked="true"></td><td align="center"><input type="radio" name="L2" value="2"></td><td align="center"><input type="radio" name="L2" value="3"></td><td align="center"><input type="radio" name="L2" value="4"></td><td align="center"><input type="radio" name="L2" value="5"></td></tr>
+<tr id="E9" style=""><td align="right">I am the last to laugh at a joke.</td>
+<td align="center"><input type="radio" name="E9" value="1" checked="true"></td><td align="center"><input type="radio" name="E9" value="2"></td><td align="center"><input type="radio" name="E9" value="3"></td><td align="center"><input type="radio" name="E9" value="4"></td><td align="center"><input type="radio" name="E9" value="5"></td></tr>
+<tr id="H2" style=""><td align="right">I enjoy discussing movies and books with others.</td>
+<td align="center"><input type="radio" name="H2" value="1" checked="true"></td><td align="center"><input type="radio" name="H2" value="2"></td><td align="center"><input type="radio" name="H2" value="3"></td><td align="center"><input type="radio" name="H2" value="4"></td><td align="center"><input type="radio" name="H2" value="5"></td></tr>
+<tr id="E3" style=""><td align="right">I joke around a lot.</td>
+<td align="center"><input type="radio" name="E3" value="1" checked="true"></td><td align="center"><input type="radio" name="E3" value="2"></td><td align="center"><input type="radio" name="E3" value="3"></td><td align="center"><input type="radio" name="E3" value="4"></td><td align="center"><input type="radio" name="E3" value="5"></td></tr>
+<tr id="B12" style=""><td align="right">I have a poor vocabulary.</td>
+<td align="center"><input type="radio" name="B12" value="1" checked="true"></td><td align="center"><input type="radio" name="B12" value="2"></td><td align="center"><input type="radio" name="B12" value="3"></td><td align="center"><input type="radio" name="B12" value="4"></td><td align="center"><input type="radio" name="B12" value="5"></td></tr>
+<tr id="E10" style=""><td align="right">I dislike loud music.</td>
+<td align="center"><input type="radio" name="E10" value="1" checked="true"></td><td align="center"><input type="radio" name="E10" value="2"></td><td align="center"><input type="radio" name="E10" value="3"></td><td align="center"><input type="radio" name="E10" value="4"></td><td align="center"><input type="radio" name="E10" value="5"></td></tr>
+<tr id="B1" style=""><td align="right">I make insightful remarks.</td>
+<td align="center"><input type="radio" name="B1" value="1" checked="true"></td><td align="center"><input type="radio" name="B1" value="2"></td><td align="center"><input type="radio" name="B1" value="3"></td><td align="center"><input type="radio" name="B1" value="4"></td><td align="center"><input type="radio" name="B1" value="5"></td></tr>
+<tr id="A2" style=""><td align="right">I enjoy bringing people together.</td>
+<td align="center"><input type="radio" name="A2" value="1" checked="true"></td><td align="center"><input type="radio" name="A2" value="2"></td><td align="center"><input type="radio" name="A2" value="3"></td><td align="center"><input type="radio" name="A2" value="4"></td><td align="center"><input type="radio" name="A2" value="5"></td></tr>
+<tr id="O2" style=""><td align="right">I get chores done right away.</td>
+<td align="center"><input type="radio" name="O2" value="1" checked="true"></td><td align="center"><input type="radio" name="O2" value="2"></td><td align="center"><input type="radio" name="O2" value="3"></td><td align="center"><input type="radio" name="O2" value="4"></td><td align="center"><input type="radio" name="O2" value="5"></td></tr>
+<tr id="B7" style=""><td align="right">I reflect on things before acting.</td>
+<td align="center"><input type="radio" name="B7" value="1" checked="true"></td><td align="center"><input type="radio" name="B7" value="2"></td><td align="center"><input type="radio" name="B7" value="3"></td><td align="center"><input type="radio" name="B7" value="4"></td><td align="center"><input type="radio" name="B7" value="5"></td></tr>
+<tr id="O7" style=""><td align="right">I am not bothered by disorder.</td>
+<td align="center"><input type="radio" name="O7" value="1" checked="true"></td><td align="center"><input type="radio" name="O7" value="2"></td><td align="center"><input type="radio" name="O7" value="3"></td><td align="center"><input type="radio" name="O7" value="4"></td><td align="center"><input type="radio" name="O7" value="5"></td></tr>
+<tr id="A8" style=""><td align="right">I don't like to get involved in other people's problems.</td>
+<td align="center"><input type="radio" name="A8" value="1" checked="true"></td><td align="center"><input type="radio" name="A8" value="2"></td><td align="center"><input type="radio" name="A8" value="3"></td><td align="center"><input type="radio" name="A8" value="4"></td><td align="center"><input type="radio" name="A8" value="5"></td></tr>
+<tr id="F7" style=""><td align="right">I break rules.</td>
+<td align="center"><input type="radio" name="F7" value="1" checked="true"></td><td align="center"><input type="radio" name="F7" value="2"></td><td align="center"><input type="radio" name="F7" value="3"></td><td align="center"><input type="radio" name="F7" value="4"></td><td align="center"><input type="radio" name="F7" value="5"></td></tr>
+<tr id="D6" style=""><td align="right">I can take strong measures.</td>
+<td align="center"><input type="radio" name="D6" value="1" checked="true"></td><td align="center"><input type="radio" name="D6" value="2"></td><td align="center"><input type="radio" name="D6" value="3"></td><td align="center"><input type="radio" name="D6" value="4"></td><td align="center"><input type="radio" name="D6" value="5"></td></tr>
+<tr id="E2" style=""><td align="right">I love large parties.</td>
+<td align="center"><input type="radio" name="E2" value="1" checked="true"></td><td align="center"><input type="radio" name="E2" value="2"></td><td align="center"><input type="radio" name="E2" value="3"></td><td align="center"><input type="radio" name="E2" value="4"></td><td align="center"><input type="radio" name="E2" value="5"></td></tr>
+<tr id="H8" style=""><td align="right">I do not like poetry.</td>
+<td align="center"><input type="radio" name="H8" value="1" checked="true"></td><td align="center"><input type="radio" name="H8" value="2"></td><td align="center"><input type="radio" name="H8" value="3"></td><td align="center"><input type="radio" name="H8" value="4"></td><td align="center"><input type="radio" name="H8" value="5"></td></tr>
+<tr id="I9" style=""><td align="right">I believe that others have good intentions.</td>
+<td align="center"><input type="radio" name="I9" value="1" checked="true"></td><td align="center"><input type="radio" name="I9" value="2"></td><td align="center"><input type="radio" name="I9" value="3"></td><td align="center"><input type="radio" name="I9" value="4"></td><td align="center"><input type="radio" name="I9" value="5"></td></tr>
+<tr id="O8" style=""><td align="right">I leave a mess in my room.</td>
+<td align="center"><input type="radio" name="O8" value="1" checked="true"></td><td align="center"><input type="radio" name="O8" value="2"></td><td align="center"><input type="radio" name="O8" value="3"></td><td align="center"><input type="radio" name="O8" value="4"></td><td align="center"><input type="radio" name="O8" value="5"></td></tr>
+<tr id="O10" style=""><td align="right">I put off unpleasant tasks.</td>
+<td align="center"><input type="radio" name="O10" value="1" checked="true"></td><td align="center"><input type="radio" name="O10" value="2"></td><td align="center"><input type="radio" name="O10" value="3"></td><td align="center"><input type="radio" name="O10" value="4"></td><td align="center"><input type="radio" name="O10" value="5"></td></tr>
+<tr id="F9" style=""><td align="right">I oppose authority.</td>
+<td align="center"><input type="radio" name="F9" value="1" checked="true"></td><td align="center"><input type="radio" name="F9" value="2"></td><td align="center"><input type="radio" name="F9" value="3"></td><td align="center"><input type="radio" name="F9" value="4"></td><td align="center"><input type="radio" name="F9" value="5"></td></tr>
+<tr id="F6" style=""><td align="right">I resist authority.</td>
+<td align="center"><input type="radio" name="F6" value="1" checked="true"></td><td align="center"><input type="radio" name="F6" value="2"></td><td align="center"><input type="radio" name="F6" value="3"></td><td align="center"><input type="radio" name="F6" value="4"></td><td align="center"><input type="radio" name="F6" value="5"></td></tr>
+<tr id="C3" style=""><td align="right">I readily overcome setbacks.</td>
+<td align="center"><input type="radio" name="C3" value="1" checked="true"></td><td align="center"><input type="radio" name="C3" value="2"></td><td align="center"><input type="radio" name="C3" value="3"></td><td align="center"><input type="radio" name="C3" value="4"></td><td align="center"><input type="radio" name="C3" value="5"></td></tr>
+<tr id="B10" style=""><td align="right">I get confused easily.</td>
+<td align="center"><input type="radio" name="B10" value="1" checked="true"></td><td align="center"><input type="radio" name="B10" value="2"></td><td align="center"><input type="radio" name="B10" value="3"></td><td align="center"><input type="radio" name="B10" value="4"></td><td align="center"><input type="radio" name="B10" value="5"></td></tr>
+<tr id="A1" style=""><td align="right">I know how to comfort others.</td>
+<td align="center"><input type="radio" name="A1" value="1" checked="true"></td><td align="center"><input type="radio" name="A1" value="2"></td><td align="center"><input type="radio" name="A1" value="3"></td><td align="center"><input type="radio" name="A1" value="4"></td><td align="center"><input type="radio" name="A1" value="5"></td></tr>
+<tr id="K6" style=""><td align="right">I am open about myself to others.</td>
+<td align="center"><input type="radio" name="K6" value="1" checked="true"></td><td align="center"><input type="radio" name="K6" value="2"></td><td align="center"><input type="radio" name="K6" value="3"></td><td align="center"><input type="radio" name="K6" value="4"></td><td align="center"><input type="radio" name="K6" value="5"></td></tr>
+<tr id="H10" style=""><td align="right">I rarely notice my emotional reactions.</td>
+<td align="center"><input type="radio" name="H10" value="1" checked="true"></td><td align="center"><input type="radio" name="H10" value="2"></td><td align="center"><input type="radio" name="H10" value="3"></td><td align="center"><input type="radio" name="H10" value="4"></td><td align="center"><input type="radio" name="H10" value="5"></td></tr>
+<tr id="E5" style=""><td align="right">I amuse my friends.</td>
+<td align="center"><input type="radio" name="E5" value="1" checked="true"></td><td align="center"><input type="radio" name="E5" value="2"></td><td align="center"><input type="radio" name="E5" value="3"></td><td align="center"><input type="radio" name="E5" value="4"></td><td align="center"><input type="radio" name="E5" value="5"></td></tr>
+<tr id="M2" style=""><td align="right">I love to think up new ways of doing things.</td>
+<td align="center"><input type="radio" name="M2" value="1" checked="true"></td><td align="center"><input type="radio" name="M2" value="2"></td><td align="center"><input type="radio" name="M2" value="3"></td><td align="center"><input type="radio" name="M2" value="4"></td><td align="center"><input type="radio" name="M2" value="5"></td></tr>
+<tr id="H9" style=""><td align="right">I dislike works of fiction.</td>
+<td align="center"><input type="radio" name="H9" value="1" checked="true"></td><td align="center"><input type="radio" name="H9" value="2"></td><td align="center"><input type="radio" name="H9" value="3"></td><td align="center"><input type="radio" name="H9" value="4"></td><td align="center"><input type="radio" name="H9" value="5"></td></tr>
+<tr id="H7" style=""><td align="right">I do not enjoy watching dance performances.</td>
+<td align="center"><input type="radio" name="H7" value="1" checked="true"></td><td align="center"><input type="radio" name="H7" value="2"></td><td align="center"><input type="radio" name="H7" value="3"></td><td align="center"><input type="radio" name="H7" value="4"></td><td align="center"><input type="radio" name="H7" value="5"></td></tr>
+<tr id="G5" style=""><td align="right">I start conversations.</td>
+<td align="center"><input type="radio" name="G5" value="1" checked="true"></td><td align="center"><input type="radio" name="G5" value="2"></td><td align="center"><input type="radio" name="G5" value="3"></td><td align="center"><input type="radio" name="G5" value="4"></td><td align="center"><input type="radio" name="G5" value="5"></td></tr>
+<tr id="G4" style=""><td align="right">I make friends easily.</td>
+<td align="center"><input type="radio" name="G4" value="1" checked="true"></td><td align="center"><input type="radio" name="G4" value="2"></td><td align="center"><input type="radio" name="G4" value="3"></td><td align="center"><input type="radio" name="G4" value="4"></td><td align="center"><input type="radio" name="G4" value="5"></td></tr>
+<tr id="C7" style=""><td align="right">I often feel blue.</td>
+<td align="center"><input type="radio" name="C7" value="1" checked="true"></td><td align="center"><input type="radio" name="C7" value="2"></td><td align="center"><input type="radio" name="C7" value="3"></td><td align="center"><input type="radio" name="C7" value="4"></td><td align="center"><input type="radio" name="C7" value="5"></td></tr>
+<tr id="B6" style=""><td align="right">I counter others' arguments.</td>
+<td align="center"><input type="radio" name="B6" value="1" checked="true"></td><td align="center"><input type="radio" name="B6" value="2"></td><td align="center"><input type="radio" name="B6" value="3"></td><td align="center"><input type="radio" name="B6" value="4"></td><td align="center"><input type="radio" name="B6" value="5"></td></tr>
+<tr id="M8" style=""><td align="right">I am not interested in theoretical discussions.</td>
+<td align="center"><input type="radio" name="M8" value="1" checked="true"></td><td align="center"><input type="radio" name="M8" value="2"></td><td align="center"><input type="radio" name="M8" value="3"></td><td align="center"><input type="radio" name="M8" value="4"></td><td align="center"><input type="radio" name="M8" value="5"></td></tr>
+<tr id="N4" style=""><td align="right">I seek quiet.</td>
+<td align="center"><input type="radio" name="N4" value="1" checked="true"></td><td align="center"><input type="radio" name="N4" value="2"></td><td align="center"><input type="radio" name="N4" value="3"></td><td align="center"><input type="radio" name="N4" value="4"></td><td align="center"><input type="radio" name="N4" value="5"></td></tr>
+<tr id="C6" style=""><td align="right">I have frequent mood swings.</td>
+<td align="center"><input type="radio" name="C6" value="1" checked="true"></td><td align="center"><input type="radio" name="C6" value="2"></td><td align="center"><input type="radio" name="C6" value="3"></td><td align="center"><input type="radio" name="C6" value="4"></td><td align="center"><input type="radio" name="C6" value="5"></td></tr>
+<tr id="B5" style=""><td align="right">I learn quickly.</td>
+<td align="center"><input type="radio" name="B5" value="1" checked="true"></td><td align="center"><input type="radio" name="B5" value="2"></td><td align="center"><input type="radio" name="B5" value="3"></td><td align="center"><input type="radio" name="B5" value="4"></td><td align="center"><input type="radio" name="B5" value="5"></td></tr>
+<tr id="M7" style=""><td align="right">I rarely look for a deeper meaning in things.</td>
+<td align="center"><input type="radio" name="M7" value="1" checked="true"></td><td align="center"><input type="radio" name="M7" value="2"></td><td align="center"><input type="radio" name="M7" value="3"></td><td align="center"><input type="radio" name="M7" value="4"></td><td align="center"><input type="radio" name="M7" value="5"></td></tr>
+<tr id="H1" style=""><td align="right">I like to read.</td>
+<td align="center"><input type="radio" name="H1" value="1" checked="true"></td><td align="center"><input type="radio" name="H1" value="2"></td><td align="center"><input type="radio" name="H1" value="3"></td><td align="center"><input type="radio" name="H1" value="4"></td><td align="center"><input type="radio" name="H1" value="5"></td></tr>
+<tr id="K5" style=""><td align="right">I keep my thoughts to myself.</td>
+<td align="center"><input type="radio" name="K5" value="1" checked="true"></td><td align="center"><input type="radio" name="K5" value="2"></td><td align="center"><input type="radio" name="K5" value="3"></td><td align="center"><input type="radio" name="K5" value="4"></td><td align="center"><input type="radio" name="K5" value="5"></td></tr>
+<tr id="M10" style=""><td align="right">I try to avoid complex people.</td>
+<td align="center"><input type="radio" name="M10" value="1" checked="true"></td><td align="center"><input type="radio" name="M10" value="2"></td><td align="center"><input type="radio" name="M10" value="3"></td><td align="center"><input type="radio" name="M10" value="4"></td><td align="center"><input type="radio" name="M10" value="5"></td></tr>
+<tr id="K1" style=""><td align="right">I reveal little about myself.</td>
+<td align="center"><input type="radio" name="K1" value="1" checked="true"></td><td align="center"><input type="radio" name="K1" value="2"></td><td align="center"><input type="radio" name="K1" value="3"></td><td align="center"><input type="radio" name="K1" value="4"></td><td align="center"><input type="radio" name="K1" value="5"></td></tr>
+<tr id="O6" style=""><td align="right">I am not bothered by messy people.</td>
+<td align="center"><input type="radio" name="O6" value="1" checked="true"></td><td align="center"><input type="radio" name="O6" value="2"></td><td align="center"><input type="radio" name="O6" value="3"></td><td align="center"><input type="radio" name="O6" value="4"></td><td align="center"><input type="radio" name="O6" value="5"></td></tr>
+<tr id="B9" style=""><td align="right">I consider myself an average person.</td>
+<td align="center"><input type="radio" name="B9" value="1" checked="true"></td><td align="center"><input type="radio" name="B9" value="2"></td><td align="center"><input type="radio" name="B9" value="3"></td><td align="center"><input type="radio" name="B9" value="4"></td><td align="center"><input type="radio" name="B9" value="5"></td></tr>
+<tr id="O3" style=""><td align="right">I like order.</td>
+<td align="center"><input type="radio" name="O3" value="1" checked="true"></td><td align="center"><input type="radio" name="O3" value="2"></td><td align="center"><input type="radio" name="O3" value="3"></td><td align="center"><input type="radio" name="O3" value="4"></td><td align="center"><input type="radio" name="O3" value="5"></td></tr>
+<tr id="M6" style=""><td align="right">I avoid philosophical discussions.</td>
+<td align="center"><input type="radio" name="M6" value="1" checked="true"></td><td align="center"><input type="radio" name="M6" value="2"></td><td align="center"><input type="radio" name="M6" value="3"></td><td align="center"><input type="radio" name="M6" value="4"></td><td align="center"><input type="radio" name="M6" value="5"></td></tr>
+<tr id="P4" style=""><td align="right">I am annoyed by others' mistakes.</td>
+<td align="center"><input type="radio" name="P4" value="1" checked="true"></td><td align="center"><input type="radio" name="P4" value="2"></td><td align="center"><input type="radio" name="P4" value="3"></td><td align="center"><input type="radio" name="P4" value="4"></td><td align="center"><input type="radio" name="P4" value="5"></td></tr>
+<tr id="H5" style=""><td align="right">I cry during movies.</td>
+<td align="center"><input type="radio" name="H5" value="1" checked="true"></td><td align="center"><input type="radio" name="H5" value="2"></td><td align="center"><input type="radio" name="H5" value="3"></td><td align="center"><input type="radio" name="H5" value="4"></td><td align="center"><input type="radio" name="H5" value="5"></td></tr>
+<tr id="A9" style=""><td align="right">I am not really interested in others.</td>
+<td align="center"><input type="radio" name="A9" value="1" checked="true"></td><td align="center"><input type="radio" name="A9" value="2"></td><td align="center"><input type="radio" name="A9" value="3"></td><td align="center"><input type="radio" name="A9" value="4"></td><td align="center"><input type="radio" name="A9" value="5"></td></tr>
+<tr id="I6" style=""><td align="right">I believe that people are essentially evil.</td>
+<td align="center"><input type="radio" name="I6" value="1" checked="true"></td><td align="center"><input type="radio" name="I6" value="2"></td><td align="center"><input type="radio" name="I6" value="3"></td><td align="center"><input type="radio" name="I6" value="4"></td><td align="center"><input type="radio" name="I6" value="5"></td></tr>
+<tr id="F10" style=""><td align="right">I know how to get around the rules.</td>
+<td align="center"><input type="radio" name="F10" value="1" checked="true"></td><td align="center"><input type="radio" name="F10" value="2"></td><td align="center"><input type="radio" name="F10" value="3"></td><td align="center"><input type="radio" name="F10" value="4"></td><td align="center"><input type="radio" name="F10" value="5"></td></tr>
+<tr id="E7" style=""><td align="right">I seldom joke around.</td>
+<td align="center"><input type="radio" name="E7" value="1" checked="true"></td><td align="center"><input type="radio" name="E7" value="2"></td><td align="center"><input type="radio" name="E7" value="3"></td><td align="center"><input type="radio" name="E7" value="4"></td><td align="center"><input type="radio" name="E7" value="5"></td></tr>
+<tr id="M4" style=""><td align="right">I carry the conversation to a higher level.</td>
+<td align="center"><input type="radio" name="M4" value="1" checked="true"></td><td align="center"><input type="radio" name="M4" value="2"></td><td align="center"><input type="radio" name="M4" value="3"></td><td align="center"><input type="radio" name="M4" value="4"></td><td align="center"><input type="radio" name="M4" value="5"></td></tr>
+<tr id="L5" style=""><td align="right">I spend time thinking about past mistakes.</td>
+<td align="center"><input type="radio" name="L5" value="1" checked="true"></td><td align="center"><input type="radio" name="L5" value="2"></td><td align="center"><input type="radio" name="L5" value="3"></td><td align="center"><input type="radio" name="L5" value="4"></td><td align="center"><input type="radio" name="L5" value="5"></td></tr>
+<tr id="G2" style=""><td align="right">I talk to a lot of different people at parties.</td>
+<td align="center"><input type="radio" name="G2" value="1" checked="true"></td><td align="center"><input type="radio" name="G2" value="2"></td><td align="center"><input type="radio" name="G2" value="3"></td><td align="center"><input type="radio" name="G2" value="4"></td><td align="center"><input type="radio" name="G2" value="5"></td></tr>
+<tr id="K4" style=""><td align="right">I bottle up my feelings.</td>
+<td align="center"><input type="radio" name="K4" value="1" checked="true"></td><td align="center"><input type="radio" name="K4" value="2"></td><td align="center"><input type="radio" name="K4" value="3"></td><td align="center"><input type="radio" name="K4" value="4"></td><td align="center"><input type="radio" name="K4" value="5"></td></tr>
+<tr id="N1" style=""><td align="right">I want to be left alone.</td>
+<td align="center"><input type="radio" name="N1" value="1" checked="true"></td><td align="center"><input type="radio" name="N1" value="2"></td><td align="center"><input type="radio" name="N1" value="3"></td><td align="center"><input type="radio" name="N1" value="4"></td><td align="center"><input type="radio" name="N1" value="5"></td></tr>
+<tr id="A4" style=""><td align="right">I take an interest in other people's lives.</td>
+<td align="center"><input type="radio" name="A4" value="1" checked="true"></td><td align="center"><input type="radio" name="A4" value="2"></td><td align="center"><input type="radio" name="A4" value="3"></td><td align="center"><input type="radio" name="A4" value="4"></td><td align="center"><input type="radio" name="A4" value="5"></td></tr>
+<tr id="I3" style=""><td align="right">I am wary of others.</td>
+<td align="center"><input type="radio" name="I3" value="1" checked="true"></td><td align="center"><input type="radio" name="I3" value="2"></td><td align="center"><input type="radio" name="I3" value="3"></td><td align="center"><input type="radio" name="I3" value="4"></td><td align="center"><input type="radio" name="I3" value="5"></td></tr>
+<tr id="N9" style=""><td align="right">I enjoy teamwork.</td>
+<td align="center"><input type="radio" name="N9" value="1" checked="true"></td><td align="center"><input type="radio" name="N9" value="2"></td><td align="center"><input type="radio" name="N9" value="3"></td><td align="center"><input type="radio" name="N9" value="4"></td><td align="center"><input type="radio" name="N9" value="5"></td></tr>
+<tr id="G8" style=""><td align="right">I have little to say.</td>
+<td align="center"><input type="radio" name="G8" value="1" checked="true"></td><td align="center"><input type="radio" name="G8" value="2"></td><td align="center"><input type="radio" name="G8" value="3"></td><td align="center"><input type="radio" name="G8" value="4"></td><td align="center"><input type="radio" name="G8" value="5"></td></tr>
+<tr id="F1" style=""><td align="right">I believe laws should be strictly enforced.</td>
+<td align="center"><input type="radio" name="F1" value="1" checked="true"></td><td align="center"><input type="radio" name="F1" value="2"></td><td align="center"><input type="radio" name="F1" value="3"></td><td align="center"><input type="radio" name="F1" value="4"></td><td align="center"><input type="radio" name="F1" value="5"></td></tr>
+<tr id="J8" style=""><td align="right">I do things by the book.</td>
+<td align="center"><input type="radio" name="J8" value="1" checked="true"></td><td align="center"><input type="radio" name="J8" value="2"></td><td align="center"><input type="radio" name="J8" value="3"></td><td align="center"><input type="radio" name="J8" value="4"></td><td align="center"><input type="radio" name="J8" value="5"></td></tr>
+<tr id="K7" style=""><td align="right">I am open about my feelings.</td>
+<td align="center"><input type="radio" name="K7" value="1" checked="true"></td><td align="center"><input type="radio" name="K7" value="2"></td><td align="center"><input type="radio" name="K7" value="3"></td><td align="center"><input type="radio" name="K7" value="4"></td><td align="center"><input type="radio" name="K7" value="5"></td></tr>
+<tr id="I5" style=""><td align="right">I believe that people seldom tell you the whole truth.</td>
+<td align="center"><input type="radio" name="I5" value="1" checked="true"></td><td align="center"><input type="radio" name="I5" value="2"></td><td align="center"><input type="radio" name="I5" value="3"></td><td align="center"><input type="radio" name="I5" value="4"></td><td align="center"><input type="radio" name="I5" value="5"></td></tr>
+<tr id="J6" style=""><td align="right">I take deviant positions.</td>
+<td align="center"><input type="radio" name="J6" value="1" checked="true"></td><td align="center"><input type="radio" name="J6" value="2"></td><td align="center"><input type="radio" name="J6" value="3"></td><td align="center"><input type="radio" name="J6" value="4"></td><td align="center"><input type="radio" name="J6" value="5"></td></tr>
+
+	<tr><td colspan="6" align="right">
+	<br>
+	 <input type="submit" value="Submit" />
+	<br><br><br><br>
+	</td>
+	</tr>
+	</tbody></table>
+			</div>
+	</form>
+</body>
+</html>
