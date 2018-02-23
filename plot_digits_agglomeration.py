@@ -15,7 +15,7 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import scale
 
 def GetCompatibility(df1,df2):
-    maxdifference = 65
+    maxdifference = 52
     dist = np.linalg.norm(df1 - df2)
     compatibility=100 - (dist/maxdifference*100)
     return compatibility

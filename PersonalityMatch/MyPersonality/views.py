@@ -22,7 +22,7 @@ ColNames=['A1','A2','A3','A4','A5','A6','A7','A8','A9','A10','B1','B2','B3','B4'
 
 def result(request):
 
-    temp=request.GET.get('userName')
+    temp=request.GET.get('userName').replace(' ','')
 
     finalDict={}
     Compatibility=[]
@@ -39,7 +39,8 @@ def result(request):
 
         df2 = pd.DataFrame.from_records(finalDict)
         Compatibility.append((user,GetCompatibility(df,df2)))
-    print Compatibility
+
+    return render(request, 'ViewResults.html',{'Compatibility':Compatibility})
 
 def renew_book_librarian(request):
 
@@ -49,7 +50,7 @@ def renew_book_librarian(request):
        # Check if the form is valid:
         if True:
             print "**********************"
-            UserName=request.POST.get('FullName')
+            UserName=request.POST.get('FullName').replace(' ','')
             AnswerList=[]
             # process the data in form.cleaned_data as required (here we just write it to the model due_back field)
             for each_col in ColNames:
@@ -62,6 +63,6 @@ def renew_book_librarian(request):
                      question=question,
                      answer=answer)
                 PeronalityInstance.save()
-            return redirect('/results')
+            return redirect('/result?userName='+UserName)
     return render(request, 'PersonalityQuestions.html')
 
